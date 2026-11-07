@@ -110,11 +110,11 @@ Evaluation was performed against an unseen test vault of 750 stratified transact
 
 ## 🔍 Explainable AI (SHAP) & Forensic Governance
 
-In modern fintech operations, black-box predictions violate regulatory mandates (NDPR, CBN consumer protection guidelines, GDPR Article 22):
+In modern fintech operations, black-box predictions violate regulatory mandates (NDPR, CBN consumer protection guidelines, GDPR Article 22). When a transaction is blocked at a POS terminal or gateway, investigators need to know the exact factors that triggered the alert.
 
-$$\phi_i(x) = \sum_{S \subseteq F \setminus \{i\}} \frac{|S|!(|F| - |S| - 1)!}{|F|!} [f_x(S \cup \{i\}) - f_x(S)]$$
+Instead of relying on opaque split counts, SHAP calculates the exact marginal contribution of each feature to the model's prediction by measuring how the predicted fraud probability changes when that feature is included versus excluded across all possible feature combinations.
 
-Using `shap.TreeExplainer`, we extract exact polynomial-time Shapley values to uncover the global mechanics and local forensic profiles:
+Using `shap.TreeExplainer`, we audit both the global risk mechanics and local forensic profiles:
 
 ### 1. Global Risk Drivers (SHAP Directional Beeswarm)
 * **`failed_pin_attempts`:** The strongest single positive risk driver. High values (3-5 failed entries) push model log-odds aggressively toward fraud.
