@@ -95,9 +95,9 @@ Evaluation was performed against an unseen test vault of 750 stratified transact
 ### Financial Cost Matrix & Operational Threshold Optimization:
 
 In financial fraud operations, operating thresholds are never set arbitrarily. They are governed by an asymmetric **Financial Cost Matrix**:
-* **Cost of False Negative ($C_{FN}$ - Missed Fraud):** Stolen transaction balance (sample mean $790) + card scheme dispute / chargeback processing fees ($50) = **$840 per missed fraud**.
-* **Cost of False Positive ($C_{FP}$ - False Decline):** Operations desk review labor ($25) + lost merchant interchange revenue ($15) = **$40 per false alarm**.
-* **Asymmetry Ratio:** Missing fraud is **21 times more expensive** than a false decline ($840 / $40 = 21:1).
+* **Cost of False Negative ($C_{FN}$ - Missed Fraud):** Stolen transaction balance (sample mean \$790) + card scheme dispute / chargeback processing fees (\$50) = **\$840 per missed fraud**.
+* **Cost of False Positive ($C_{FP}$ - False Decline):** Operations desk review labor (\$25) + lost merchant interchange revenue (\$15) = **\$40 per false alarm**.
+* **Asymmetry Ratio:** Missing fraud is **21 times more expensive** than a false decline (\$840 / \$40 = 21:1).
 
 $$\text{Total Operational Loss} = (FN \times \$840) + (FP \times \$40)$$
 
@@ -110,9 +110,9 @@ $$\text{Total Operational Loss} = (FN \times \$840) + (FP \times \$40)$$
 | **True Negatives** | 631 | 617 | Minimal impact on legitimate customer approvals |
 | **False Positives** | 7 | 21 | Merchant friction strictly bounded at 3.3% of clean txns |
 | **F1-Score (Fraud Class)** | 0.6851 | **0.6897** | Superior balance between recall and precision |
-| **Total Operational Loss ($)** | **$42,280** | **$36,120** | **$6,160 Net Savings (14.6% Dollar Loss Reduction)** |
+| **Total Operational Loss ($)** | **\$42,280** | **\$36,120** | **\$6,160 Net Savings (14.6% Dollar Loss Reduction)** |
 
-> **Financial Decision Rationale:** Tuning the threshold from `0.50` to `0.30` intercepts 8 additional fraudulent transactions, cutting direct chargeback loss from $42,000 to $35,280. While false alarms add $560 in review labor, the net financial savings is **$6,160 across 750 transactions**, while keeping 96.7% of clean transactions approved instantly without friction. Lowering below 0.25 is rejected because customer friction and support review costs escalate rapidly.
+> **Financial Decision Rationale:** Tuning the threshold from `0.50` to `0.30` intercepts 8 additional fraudulent transactions, cutting direct chargeback loss from \$42,000 to \$35,280. While false alarms add \$560 in review labor, the net financial savings is **\$6,160 across 750 transactions**, while keeping 96.7% of clean transactions approved instantly without friction. Lowering below 0.25 is rejected because customer friction and support review costs escalate rapidly.
 
 ---
 
