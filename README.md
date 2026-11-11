@@ -133,6 +133,12 @@ Using `shap.TreeExplainer`, we audit both the global risk mechanics and local fo
 * **Flagged Fraud Transaction (#high_risk):** A high-value transaction with 3 failed PIN attempts and cross-border routing was flagged with a **99.3% fraud probability**. The SHAP waterfall provides compliance officers with exact additive evidence (+0.82 from failed PINs, +0.65 from transaction amount).
 * **Approved Clean Transaction (#low_risk):** A daytime transaction with 0 failed PINs and 36 months of account tenure scored a **0.08% fraud probability**, with tenure contributing -1.24 in negative attribution.
 
+### 3. Known Data Limitation: Early-Tenure Sampling Bias
+An audit of the underlying `fintech_fraud.db` training dataset (`3,000` transactions) via live SHAP waterfall inspection revealed a sampling bias in account tenure:
+* **Data Gap (Months 1 to 5):** Legitimate transactions (`is_fraud = 0`) in the dataset begin at `customer_tenure_months = 6`. All `87` transactions recorded between months `1` and `5` are labeled fraudulent (`is_fraud = 1`), leaving zero legitimate early-tenure examples in training.
+* **Model Impact:** Because XGBoost observes no clean transactions below 6 months, low tenure acts as an overly aggressive risk prior (for example, `customer_tenure_months = 1` contributes `+2.86` log-odds in SHAP attribution). As a result, a new customer in months 1 to 5 with a single failed PIN attempt on an otherwise normal local `$350` transaction scores `56.5%` fraud probability and triggers a review flag.
+* **Production Remediation:** Before deploying to uncurated live traffic, the training set should be backfilled with legitimate transactions from accounts aged 1 to 5 months to recalibrate the baseline prior, and moderate risk scores (such as `30%` to `75%`) should route to step-up authentication (SMS OTP or biometric check) rather than a hard block.
+
 ---
 
 ## 💻 Interactive Streamlit Application (`fraud_app.py`)
